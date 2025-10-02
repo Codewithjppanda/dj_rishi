@@ -42,9 +42,9 @@ export default function Footer() {
           className="bg-primary/10 border border-primary/30 rounded-lg p-6 mb-12"
         >
           <p className="text-sm text-center text-gray-300">
-            We've been made aware of fraudulent messages claiming to be from our team, asking for
+            We&apos;ve been made aware of fraudulent messages claiming to be from our team, asking for
             payments in exchange for special offers or access. Please note, we will never reach out
-            to request payment for any services or experiences. If you receive such a message, it's
+            to request payment for any services or experiences. If you receive such a message, it&apos;s
             a scam—stay safe and report it!
           </p>
         </motion.div>
