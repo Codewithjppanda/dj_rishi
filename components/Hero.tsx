@@ -1,16 +1,21 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.playbackRate = 0.8; // Slow down video for dramatic effect
     }
   }, []);
+
+  const handleVideoLoad = () => {
+    setVideoLoaded(true);
+  };
 
   const scrollToNext = () => {
     const toursSection = document.getElementById('tours');
@@ -21,25 +26,50 @@ export default function Hero() {
     <section className="relative h-screen w-full overflow-hidden flex items-center justify-center">
       {/* Video Background */}
       <div className="absolute inset-0 w-full h-full">
-        <video
+        <motion.video
           ref={videoRef}
           autoPlay
           loop
           muted
           playsInline
+          preload="auto"
+          onLoadedData={handleVideoLoad}
+          onCanPlay={handleVideoLoad}
           className="w-full h-full object-cover"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
         >
           <source src="/images/Glitch Logo.mp4" type="video/mp4" />
-        </video>
+        </motion.video>
         <div className="absolute inset-0 bg-gradient-to-b from-dark-900/70 via-dark-900/50 to-dark-900"></div>
       </div>
 
-      {/* Content */}
+      {/* Loading Overlay - Shows while video is loading */}
+      {!videoLoaded && (
+        <motion.div
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="absolute inset-0 bg-dark-900 z-20 flex items-center justify-center"
+        >
+          <div className="flex flex-col items-center gap-4">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full"
+            />
+            <p className="text-gray-400">Loading...</p>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Content - Shows after video loads */}
       <div className="relative z-10 text-center px-6">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 2.5 }}
+          animate={videoLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 1, delay: 0.3 }}
           className="text-6xl md:text-8xl font-bold mb-6 tracking-tight"
         >
           DJ <span className="text-primary">Rishi</span>
@@ -47,8 +77,8 @@ export default function Hero() {
         
         <motion.p
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.8 }}
+          animate={videoLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 1, delay: 0.6 }}
           className="text-xl md:text-2xl text-gray-300 mb-12 max-w-2xl mx-auto"
         >
           Elevate Your Experience
@@ -56,8 +86,8 @@ export default function Hero() {
 
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 1.1 }}
+          animate={videoLoaded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.9 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
           <motion.a
@@ -80,11 +110,11 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Indicator - Shows after video loads */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
+        animate={videoLoaded ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ delay: 1.2, duration: 1 }}
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer"
         onClick={scrollToNext}
       >
