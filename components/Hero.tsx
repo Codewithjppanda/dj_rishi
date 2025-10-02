@@ -39,7 +39,7 @@ export default function Hero() {
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          transition={{ duration: 1, delay: 2.5 }}
           className="text-6xl md:text-8xl font-bold mb-6 tracking-tight"
         >
           DJ <span className="text-primary">Rishi</span>
