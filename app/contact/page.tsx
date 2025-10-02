@@ -46,7 +46,7 @@ export default function ContactPage() {
             <span className="text-primary">Get In Touch</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-300">
-            Let's create something amazing together
+            Let&apos;s create something amazing together
           </p>
         </motion.div>
       </section>
