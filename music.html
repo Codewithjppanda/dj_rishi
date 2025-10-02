@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ Artist – Music</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">DJ<span>Artist</span></a>
+            </div>
+            <nav id="navbar">
+                <ul class="nav-list" id="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="music.html" class="active">Music</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <button class="nav-toggle" id="nav-toggle" aria-label="toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <h1>Music &amp; Releases</h1>
+        <p>Explore our latest tracks and sonic experiments</p>
+    </section>
+
+    <section class="page-content">
+        <div class="container">
+            <div class="music-list">
+                <!-- Track Item 1 -->
+                <div class="track">
+                    <h3>Midnight Echoes</h3>
+                    <p>A smooth blend of deep house rhythms and evocative melodies.</p>
+                    <audio controls>
+                        <source src="sample.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <!-- Track Item 2 -->
+                <div class="track">
+                    <h3>Sunrise Groove</h3>
+                    <p>Upbeat vibes to welcome the dawn and energise your day.</p>
+                    <audio controls>
+                        <source src="sample.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <!-- Track Item 3 -->
+                <div class="track">
+                    <h3>Celestial Waves</h3>
+                    <p>An ambient journey through spacey textures and distant echoes.</p>
+                    <audio controls>
+                        <source src="sample.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <!-- Track Item 4 -->
+                <div class="track">
+                    <h3>Nightfall</h3>
+                    <p>Dark techno beats meeting haunting synths to stir your senses.</p>
+                    <audio controls>
+                        <source src="sample.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <!-- Track Item 5 -->
+                <div class="track">
+                    <h3>Pulse of Light</h3>
+                    <p>A festival favourite filled with energetic bass and catchy hooks.</p>
+                    <audio controls>
+                        <source src="sample.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <!-- Track Item 6 -->
+                <div class="track">
+                    <h3>Serene Skies</h3>
+                    <p>Chill-out tunes perfect for unwinding after a long day.</p>
+                    <audio controls>
+                        <source src="sample.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-about">
+                <h3>About DJ Artist</h3>
+                <p>DJ Artist is a music creator committed to bringing you the latest sounds, innovative beats and uplifting performances. Join us on a sonic journey unlike any other.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="music.html">Music</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h3>Connect</h3>
+                <ul class="social-list">
+                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="#"><i class="fab fa-soundcloud"></i></a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="year"></span> DJ Artist. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ Artist – Events</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">DJ<span>Artist</span></a>
+            </div>
+            <nav id="navbar">
+                <ul class="nav-list" id="nav-list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="music.html">Music</a></li>
+                    <li><a href="events.html" class="active">Events</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <button class="nav-toggle" id="nav-toggle" aria-label="toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <h1>Upcoming Events</h1>
+        <p>Don’t miss our latest shows and DJ nights</p>
+    </section>
+
+    <section class="page-content">
+        <div class="container">
+            <p>Catch DJ Artist live at venues around the world. Experience high‑energy performances, breathtaking visuals and the freshest tracks.</p>
+            <table class="events-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Event</th>
+                        <th>Location</th>
+                        <th>Tickets</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>October 11, 2025</td>
+                        <td>Omnia Nightclub</td>
+                        <td>Las Vegas, USA</td>
+                        <td><a href="#" class="btn-primary" style="padding:0.4rem 1rem;font-size:0.8rem;">Book</a></td>
+                    </tr>
+                    <tr>
+                        <td>October 24, 2025</td>
+                        <td>Red Rocks Amphitheatre</td>
+                        <td>Morrison, USA</td>
+                        <td><a href="#" class="btn-primary" style="padding:0.4rem 1rem;font-size:0.8rem;">Book</a></td>
+                    </tr>
+                    <tr>
+                        <td>November 5, 2025</td>
+                        <td>Creamfields India</td>
+                        <td>Bangalore, India</td>
+                        <td><a href="#" class="btn-primary" style="padding:0.4rem 1rem;font-size:0.8rem;">Book</a></td>
+                    </tr>
+                    <tr>
+                        <td>November 20, 2025</td>
+                        <td>Sunburn Festival</td>
+                        <td>Goa, India</td>
+                        <td><a href="#" class="btn-primary" style="padding:0.4rem 1rem;font-size:0.8rem;">Book</a></td>
+                    </tr>
+                    <tr>
+                        <td>December 31, 2025</td>
+                        <td>New Year’s Eve Bash</td>
+                        <td>Bhubaneswar, India</td>
+                        <td><a href="#" class="btn-primary" style="padding:0.4rem 1rem;font-size:0.8rem;">Book</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-about">
+                <h3>About DJ Artist</h3>
+                <p>DJ Artist is a music creator committed to bringing you the latest sounds, innovative beats and uplifting performances. Join us on a sonic journey unlike any other.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="music.html">Music</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h3>Connect</h3>
+                <ul class="social-list">
+                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="#"><i class="fab fa-soundcloud"></i></a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="year"></span> DJ Artist. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
