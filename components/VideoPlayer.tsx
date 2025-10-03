@@ -25,6 +25,7 @@ export default function VideoPlayer({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [showControls, setShowControls] = useState(true);
+  const [hasStarted, setHasStarted] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -34,6 +35,12 @@ export default function VideoPlayer({
       setIsLoaded(true);
       // Seek to 1 second to show a frame
       video.currentTime = 1;
+      
+      // Auto-play if it's not a thumbnail
+      if (!thumbnail && !hasStarted) {
+        setHasStarted(true);
+        video.play().catch(err => console.log('Auto-play failed:', err));
+      }
     };
 
     const handlePlay = () => setIsPlaying(true);
@@ -48,7 +55,7 @@ export default function VideoPlayer({
       video.removeEventListener('play', handlePlay);
       video.removeEventListener('pause', handlePause);
     };
-  }, []);
+  }, [thumbnail, hasStarted]);
 
   const togglePlayPause = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -70,6 +77,7 @@ export default function VideoPlayer({
         loop
         playsInline
         muted={thumbnail}
+        autoPlay={!thumbnail}
         preload="metadata"
         controls={controls && !thumbnail}
         onClick={thumbnail ? undefined : (e) => e.stopPropagation()}
@@ -92,8 +100,8 @@ export default function VideoPlayer({
         </div>
       )}
 
-      {/* Custom Play/Pause Button for Thumbnails */}
-      {thumbnail && (
+      {/* Custom Play/Pause Button for Thumbnails - Only show if not auto-playing */}
+      {thumbnail && !isPlaying && (
         <motion.button
           onClick={togglePlayPause}
           className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/40 transition-all"
@@ -105,11 +113,7 @@ export default function VideoPlayer({
             whileHover={{ scale: 1.1 }}
             className="bg-white/95 rounded-full p-6 shadow-2xl backdrop-blur-sm"
           >
-            {isPlaying ? (
-              <FaPause className="w-8 h-8 text-primary" />
-            ) : (
-              <FaPlay className="w-8 h-8 text-primary ml-1" />
-            )}
+            <FaPlay className="w-8 h-8 text-primary ml-1" />
           </motion.div>
           
           {/* Video Label */}
@@ -120,6 +124,19 @@ export default function VideoPlayer({
             </div>
           </div>
         </motion.button>
+      )}
+
+      {/* Auto-playing indicator */}
+      {thumbnail && isPlaying && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/10">
+          {/* Video Label - Always visible */}
+          <div className="absolute bottom-4 left-4 bg-black/70 backdrop-blur-sm px-3 py-1.5 rounded-full">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+              <span className="text-xs font-semibold text-white">VIDEO</span>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Video Title Overlay */}
