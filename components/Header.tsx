@@ -37,7 +37,7 @@ export default function Header() {
   ];
 
   const socialLinks = [
-\ \ \ \ \{\ icon:\ FaInstagram,\ href:\ 'https://www\.instagram\.com/dj_rishi__\?igsh=MTRkdWxid3dzZWJrcA==',\ label:\ 'Instagram'\ },
+    { icon: FaInstagram, href: 'https://www.instagram.com/dj_rishi__?igsh=MTRkdWxid3dzZWJrcA==', label: 'Instagram' },
     { icon: FaYoutube, href: '#', label: 'YouTube' },
     { icon: FaSpotify, href: '#', label: 'Spotify' },
     { icon: FaFacebookF, href: '#', label: 'Facebook' },
@@ -46,7 +46,6 @@ export default function Header() {
     { icon: FaSnapchatGhost, href: '#', label: 'Snapchat' },
     { icon: SiApplemusic, href: '#', label: 'Apple Music' },
   ];
-
   return (
     <>
       <motion.header
