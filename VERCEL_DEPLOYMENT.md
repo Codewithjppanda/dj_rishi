@@ -10,16 +10,13 @@ The issue was that the file-based storage (`data/gallery.json`) doesn't work on 
 
 ## 📋 Vercel Environment Variables
 
-Add these **3** environment variables to Vercel:
+Add these **2** environment variables to Vercel:
 
 1. **UPLOADTHING_SECRET**
    - Value: `[Your Uploadthing Secret Key]`
 
 2. **UPLOADTHING_APP_ID**
    - Value: `dj_rishi`
-
-3. **UPLOADTHING_TOKEN** (NEW - Required!)
-   - Value: `[Same as UPLOADTHING_SECRET]`
 
 > **Note:** Get your secret key from [Uploadthing Dashboard](https://uploadthing.com/dashboard)
 
