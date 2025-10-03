@@ -4,9 +4,8 @@ const f = createUploadthing();
  
 export const ourFileRouter = {
   imageUploader: f({ image: { maxFileSize: "4MB", maxFileCount: 10 } })
-    .input<{ title: string; category: string }>()
-    .middleware(async ({ input }) => {
-      return { title: input.title, category: input.category };
+    .middleware(async ({ req }) => {
+      return { title: "Uploaded Image", category: "Festivals" };
     })
     .onUploadComplete(async ({ file, metadata }) => {
       console.log("Upload complete:", file.url, metadata);
