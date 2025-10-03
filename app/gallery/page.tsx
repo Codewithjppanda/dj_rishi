@@ -10,6 +10,7 @@ interface GalleryImage {
   src: string;
   title: string;
   category: string;
+  type?: 'image' | 'video';
 }
 
 // Default images to show when no uploads exist yet
@@ -124,15 +125,30 @@ export default function GalleryPage() {
                 onClick={() => setSelectedImage(image.src)}
                 className="relative overflow-hidden rounded-lg cursor-pointer group aspect-square"
               >
-                <img
-                  src={image.src}
-                  alt={image.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
+                {image.type === 'video' ? (
+                  <video
+                    src={image.src}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    muted
+                    loop
+                    playsInline
+                    onMouseEnter={(e) => (e.target as HTMLVideoElement).play()}
+                    onMouseLeave={(e) => (e.target as HTMLVideoElement).pause()}
+                  />
+                ) : (
+                  <img
+                    src={image.src}
+                    alt={image.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                   <div>
                     <h3 className="text-xl font-semibold mb-1">{image.title}</h3>
                     <p className="text-sm text-primary">{image.category}</p>
+                    {image.type === 'video' && (
+                      <p className="text-xs text-gray-400 mt-1">🎬 Video</p>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -150,14 +166,26 @@ export default function GalleryPage() {
           onClick={() => setSelectedImage(null)}
           className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-6 cursor-pointer"
         >
-          <motion.img
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            src={selectedImage}
-            alt="Gallery"
-            className="max-w-full max-h-full rounded-lg"
-            onClick={(e) => e.stopPropagation()}
-          />
+          {filteredImages.find(img => img.src === selectedImage)?.type === 'video' ? (
+            <motion.video
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              src={selectedImage}
+              controls
+              autoPlay
+              className="max-w-full max-h-full rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            />
+          ) : (
+            <motion.img
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              src={selectedImage}
+              alt="Gallery"
+              className="max-w-full max-h-full rounded-lg"
+              onClick={(e) => e.stopPropagation()}
+            />
+          )}
           <button
             onClick={() => setSelectedImage(null)}
             className="absolute top-6 right-6 text-white text-4xl hover:text-primary transition-colors"

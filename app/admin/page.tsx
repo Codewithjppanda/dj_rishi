@@ -257,6 +257,8 @@ export default function AdminPage() {
                       src={image.src}
                       className="w-full aspect-square object-cover rounded-lg"
                       controls
+                      muted
+                      playsInline
                     />
                   ) : (
                     <img
