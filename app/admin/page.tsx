@@ -64,10 +64,7 @@ export default function AdminPage() {
 
     setUploading(true);
     try {
-      const uploadedFiles = await startUpload(selectedFiles, {
-        title,
-        category,
-      });
+      const uploadedFiles = await startUpload(selectedFiles);
       
       if (uploadedFiles) {
         alert('Images uploaded successfully!');
@@ -76,7 +73,7 @@ export default function AdminPage() {
         // Wait a bit for Uploadthing to process
         setTimeout(() => {
           fetchImages();
-        }, 1000);
+        }, 2000);
       }
     } catch (error) {
       console.error('Upload error:', error);
