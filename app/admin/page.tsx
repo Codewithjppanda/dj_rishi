@@ -64,27 +64,22 @@ export default function AdminPage() {
 
     setUploading(true);
     try {
-      const uploadedFiles = await startUpload(selectedFiles);
+      const uploadedFiles = await startUpload(selectedFiles, {
+        title,
+        category,
+      });
       
       if (uploadedFiles) {
-        for (const file of uploadedFiles) {
-          await fetch('/api/gallery', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              src: file.url,
-              title: title,
-              category: category,
-            }),
-          });
-        }
-        
         alert('Images uploaded successfully!');
         setTitle('');
         setSelectedFiles([]);
-        fetchImages();
+        // Wait a bit for Uploadthing to process
+        setTimeout(() => {
+          fetchImages();
+        }, 1000);
       }
     } catch (error) {
+      console.error('Upload error:', error);
       alert('Upload failed!');
     } finally {
       setUploading(false);
