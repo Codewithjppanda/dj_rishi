@@ -1,25 +1,55 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-const galleryImages = [
-  { src: '/images/gallery1.png', title: 'Festival Vibes', category: 'Festivals' },
-  { src: '/images/gallery2.png', title: 'Studio Session', category: 'Studio' },
-  { src: '/images/gallery3.png', title: 'Live Performance', category: 'Live' },
-  { src: '/images/DJ Rishi 3D.png', title: 'DJ Rishi', category: 'Promo' },
-  { src: '/images/DJ Rishi Logo Transparent.png', title: 'Logo', category: 'Branding' },
-  { src: '/images/gallery1.png', title: 'Festival Night', category: 'Festivals' },
-  { src: '/images/gallery2.png', title: 'Mixing Desk', category: 'Studio' },
-  { src: '/images/gallery3.png', title: 'Crowd Energy', category: 'Live' },
-  { src: '/images/hero.png', title: 'Stage Setup', category: 'Live' },
+interface GalleryImage {
+  id: string;
+  src: string;
+  title: string;
+  category: string;
+}
+
+// Default images to show when no uploads exist yet
+const defaultImages: GalleryImage[] = [
+  { id: '1', src: '/images/gallery1.png', title: 'Festival Vibes', category: 'Festivals' },
+  { id: '2', src: '/images/gallery2.png', title: 'Studio Session', category: 'Studio' },
+  { id: '3', src: '/images/gallery3.png', title: 'Live Performance', category: 'Live' },
+  { id: '4', src: '/images/DJ Rishi 3D.png', title: 'DJ Rishi', category: 'Promo' },
+  { id: '5', src: '/images/DJ Rishi Logo Transparent.png', title: 'Logo', category: 'Branding' },
+  { id: '6', src: '/images/gallery1.png', title: 'Festival Night', category: 'Festivals' },
+  { id: '7', src: '/images/gallery2.png', title: 'Mixing Desk', category: 'Studio' },
+  { id: '8', src: '/images/gallery3.png', title: 'Crowd Energy', category: 'Live' },
+  { id: '9', src: '/images/hero.png', title: 'Stage Setup', category: 'Live' },
 ];
 
 export default function GalleryPage() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [filter, setFilter] = useState('All');
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>(defaultImages);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchImages();
+  }, []);
+
+  const fetchImages = async () => {
+    try {
+      const res = await fetch('/api/gallery');
+      const uploadedImages = await res.json();
+      
+      // Combine uploaded images with default images
+      if (uploadedImages.length > 0) {
+        setGalleryImages([...uploadedImages, ...defaultImages]);
+      }
+    } catch (error) {
+      console.log('Using default images');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const categories = ['All', 'Festivals', 'Live', 'Studio', 'Promo', 'Branding'];
 

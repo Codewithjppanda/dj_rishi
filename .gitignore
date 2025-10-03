@@ -26,9 +26,13 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
+
+# gallery data (will be empty on first deploy)
+/data/gallery.json
 
 # typescript
 *.tsbuildinfo
