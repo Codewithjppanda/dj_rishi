@@ -14,7 +14,7 @@ import { SiApplemusic } from 'react-icons/si';
 
 export default function Footer() {
   const socialLinks = [
-    { icon: FaInstagram, href: '#', label: 'Instagram' },
+    { icon: FaInstagram, href: 'https://www.instagram.com/dj_rishi__?igsh=MTRkdWxid3dzZWJrcA==', label: 'Instagram' },
     { icon: FaYoutube, href: '#', label: 'YouTube' },
     { icon: FaSpotify, href: '#', label: 'Spotify' },
     { icon: FaFacebookF, href: '#', label: 'Facebook' },
