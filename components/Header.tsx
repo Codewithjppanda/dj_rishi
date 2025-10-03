@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HiMenu, HiX } from 'react-icons/hi';
 import {
@@ -59,29 +60,30 @@ export default function Header() {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <motion.a
-              href="#"
-              className="text-2xl font-bold tracking-wider"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              DJ <span className="text-primary">Rishi</span>
-            </motion.a>
+            <Link href="/" passHref legacyBehavior>
+              <motion.a
+                className="text-2xl font-bold tracking-wider"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                DJ <span className="text-primary">Rishi</span>
+              </motion.a>
+            </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               {menuItems.map((item, index) => (
-                <motion.a
-                  key={item.name}
-                  href={item.href}
-                  className="text-sm uppercase tracking-wider hover:text-primary transition-colors"
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 + 0.3 }}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  {item.name}
-                </motion.a>
+                <Link key={item.name} href={item.href} passHref legacyBehavior>
+                  <motion.a
+                    className="text-sm uppercase tracking-wider hover:text-primary transition-colors"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 + 0.3 }}
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    {item.name}
+                  </motion.a>
+                </Link>
               ))}
             </nav>
 
@@ -109,17 +111,17 @@ export default function Header() {
           >
             <div className="flex flex-col items-center justify-center h-full space-y-8">
               {menuItems.map((item, index) => (
-                <motion.a
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="text-3xl font-semibold hover:text-primary transition-colors"
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  {item.name}
-                </motion.a>
+                <Link key={item.name} href={item.href} passHref legacyBehavior>
+                  <motion.a
+                    onClick={() => setIsMenuOpen(false)}
+                    className="text-3xl font-semibold hover:text-primary transition-colors"
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    {item.name}
+                  </motion.a>
+                </Link>
               ))}
 
               {/* Social Links in Mobile Menu */}
