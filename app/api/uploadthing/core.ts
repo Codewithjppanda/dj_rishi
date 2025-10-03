@@ -17,7 +17,7 @@ export const ourFileRouter = {
       };
     }),
   
-  videoUploader: f({ video: { maxFileSize: "100MB", maxFileCount: 5 } })
+  videoUploader: f({ video: { maxFileSize: "64MB", maxFileCount: 5 } })
     .middleware(async ({ req }) => {
       return { title: "Uploaded Video", category: "Festivals", type: "video" };
     })
