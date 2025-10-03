@@ -12,6 +12,7 @@ interface GalleryImage {
   title: string;
   category: string;
   uploadedAt: string;
+  type?: 'image' | 'video';
 }
 
 export default function AdminPage() {
@@ -22,8 +23,10 @@ export default function AdminPage() {
   const [category, setCategory] = useState('Festivals');
   const [uploading, setUploading] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [fileType, setFileType] = useState<'images' | 'videos'>('images');
 
-  const { startUpload } = useUploadThing("imageUploader");
+  const { startUpload: startImageUpload } = useUploadThing("imageUploader");
+  const { startUpload: startVideoUpload } = useUploadThing("videoUploader");
 
   // Simple password (in production, use proper authentication)
   const ADMIN_PASSWORD = 'djrishi2024'; // Change this to your desired password
@@ -64,10 +67,11 @@ export default function AdminPage() {
 
     setUploading(true);
     try {
-      const uploadedFiles = await startUpload(selectedFiles);
+      const uploadFunction = fileType === 'images' ? startImageUpload : startVideoUpload;
+      const uploadedFiles = await uploadFunction(selectedFiles);
       
       if (uploadedFiles) {
-        alert('Images uploaded successfully!');
+        alert(`${fileType === 'images' ? 'Images' : 'Videos'} uploaded successfully!`);
         setTitle('');
         setSelectedFiles([]);
         // Wait a bit for Uploadthing to process
@@ -168,12 +172,12 @@ export default function AdminPage() {
             Upload Images
           </h2>
           
-          <div className="grid md:grid-cols-2 gap-4 mb-4">
+          <div className="grid md:grid-cols-3 gap-4 mb-4">
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Image title"
+              placeholder="Media title"
               className="px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg focus:outline-none focus:border-primary text-white"
             />
             <select
@@ -187,6 +191,14 @@ export default function AdminPage() {
               <option>Promo</option>
               <option>Branding</option>
             </select>
+            <select
+              value={fileType}
+              onChange={(e) => setFileType(e.target.value as 'images' | 'videos')}
+              className="px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg focus:outline-none focus:border-primary text-white"
+            >
+              <option value="images">Images</option>
+              <option value="videos">Videos</option>
+            </select>
           </div>
 
           <div className="mb-4">
@@ -195,12 +207,12 @@ export default function AdminPage() {
               <span className="text-gray-400">
                 {selectedFiles.length > 0
                   ? `${selectedFiles.length} file(s) selected`
-                  : 'Click to select images'}
+                  : `Click to select ${fileType}`}
               </span>
               <input
                 type="file"
                 multiple
-                accept="image/*"
+                accept={fileType === 'images' ? 'image/*' : 'video/*'}
                 onChange={handleFileChange}
                 className="hidden"
               />
@@ -212,7 +224,7 @@ export default function AdminPage() {
             disabled={uploading || !selectedFiles.length}
             className="w-full px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {uploading ? 'Uploading...' : 'Upload Images'}
+            {uploading ? 'Uploading...' : `Upload ${fileType === 'images' ? 'Images' : 'Videos'}`}
           </button>
         </motion.div>
 
@@ -225,11 +237,11 @@ export default function AdminPage() {
         >
           <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
             <FaImages className="text-primary" />
-            Uploaded Images ({images.length})
+            Uploaded Media ({images.length})
           </h2>
 
           {images.length === 0 ? (
-            <p className="text-gray-400 text-center py-8">No images uploaded yet</p>
+            <p className="text-gray-400 text-center py-8">No media uploaded yet</p>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {images.map((image, index) => (
@@ -240,11 +252,19 @@ export default function AdminPage() {
                   transition={{ delay: index * 0.05 }}
                   className="relative group"
                 >
-                  <img
-                    src={image.src}
-                    alt={image.title}
-                    className="w-full aspect-square object-cover rounded-lg"
-                  />
+                  {image.type === 'video' ? (
+                    <video
+                      src={image.src}
+                      className="w-full aspect-square object-cover rounded-lg"
+                      controls
+                    />
+                  ) : (
+                    <img
+                      src={image.src}
+                      alt={image.title}
+                      className="w-full aspect-square object-cover rounded-lg"
+                    />
+                  )}
                   <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all rounded-lg flex flex-col items-center justify-center p-4">
                     <p className="text-white font-semibold text-sm mb-1">{image.title}</p>
                     <p className="text-primary text-xs mb-3">{image.category}</p>

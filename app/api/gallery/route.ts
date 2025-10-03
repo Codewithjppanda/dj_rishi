@@ -13,6 +13,7 @@ export async function GET() {
       title: file.customId || file.name || 'Untitled',
       category: 'Festivals', // Default category since we can't store custom metadata in free tier
       uploadedAt: file.uploadedAt,
+      type: file.mimeType?.startsWith('video/') ? 'video' : 'image',
     }));
     
     return NextResponse.json(images);
