@@ -126,15 +126,32 @@ export default function GalleryPage() {
                 className="relative overflow-hidden rounded-lg cursor-pointer group aspect-square"
               >
                 {image.type === 'video' ? (
-                  <video
-                    src={image.src}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    muted
-                    loop
-                    playsInline
-                    onMouseEnter={(e) => (e.target as HTMLVideoElement).play()}
-                    onMouseLeave={(e) => (e.target as HTMLVideoElement).pause()}
-                  />
+                  <div className="relative w-full h-full">
+                    <video
+                      src={image.src}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      onMouseEnter={(e) => {
+                        const video = e.target as HTMLVideoElement;
+                        video.play().catch(err => console.log('Play failed:', err));
+                      }}
+                      onMouseLeave={(e) => {
+                        const video = e.target as HTMLVideoElement;
+                        video.pause();
+                        video.currentTime = 0;
+                      }}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <div className="bg-black/50 rounded-full p-4">
+                        <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
                 ) : (
                   <img
                     src={image.src}
@@ -173,6 +190,8 @@ export default function GalleryPage() {
               src={selectedImage}
               controls
               autoPlay
+              playsInline
+              preload="auto"
               className="max-w-full max-h-full rounded-lg"
               onClick={(e) => e.stopPropagation()}
             />

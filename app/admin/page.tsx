@@ -253,13 +253,16 @@ export default function AdminPage() {
                   className="relative group"
                 >
                   {image.type === 'video' ? (
-                    <video
-                      src={image.src}
-                      className="w-full aspect-square object-cover rounded-lg"
-                      controls
-                      muted
-                      playsInline
-                    />
+                    <div className="relative w-full aspect-square">
+                      <video
+                        src={image.src}
+                        className="w-full h-full object-cover rounded-lg"
+                        controls
+                        muted
+                        playsInline
+                        preload="metadata"
+                      />
+                    </div>
                   ) : (
                     <img
                       src={image.src}
