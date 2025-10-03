@@ -8,11 +8,17 @@ const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700'],
   subsets: ['latin'],
   display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'arial'],
 });
 
 export const metadata: Metadata = {
   title: 'DJ Rishi - Official Website',
   description: 'Experience the rhythm and explore the soundscapes crafted by DJ Rishi',
+  keywords: ['DJ Rishi', 'DJ', 'Music', 'Electronic Music', 'EDM', 'Performances'],
+  authors: [{ name: 'DJ Rishi' }],
+  viewport: 'width=device-width, initial-scale=1',
+  themeColor: '#E63946',
 };
 
 export default function RootLayout({

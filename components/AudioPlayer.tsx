@@ -6,50 +6,79 @@ import { FaPlay, FaPause, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 
 export default function AudioPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true); // Default to playing
+  const [isMuted, setIsMuted] = useState(true); // Start muted for autoplay
+  const hasUnmuted = useRef(false);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    // Set the starting point to 15 seconds
-    const handleLoadedData = () => {
-      audio.currentTime = 15;
-      setIsLoaded(true);
-      
-      // Attempt to autoplay
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            setIsPlaying(true);
-          })
-          .catch((error) => {
-            console.log('Autoplay prevented:', error);
-            // If autoplay is blocked, user will need to click play button
-            setIsPlaying(false);
-          });
+    // Auto-start music on load
+    const startMusic = async () => {
+      try {
+        audio.currentTime = 15;
+        audio.volume = 0.7;
+        
+        // Try unmuted first
+        audio.muted = false;
+        await audio.play();
+        setIsMuted(false);
+        setIsPlaying(true);
+        hasUnmuted.current = true;
+      } catch (error) {
+        // If unmuted autoplay fails, play muted
+        try {
+          audio.muted = true;
+          await audio.play();
+          setIsMuted(true);
+          setIsPlaying(true);
+        } catch (err) {
+          console.log('Autoplay blocked');
+          setIsPlaying(false);
+        }
       }
     };
 
-    audio.addEventListener('loadeddata', handleLoadedData);
-    audio.addEventListener('play', () => setIsPlaying(true));
-    audio.addEventListener('pause', () => setIsPlaying(false));
-    audio.addEventListener('ended', () => {
-      // Loop back to 15 seconds when song ends
+    // Auto-unmute on first user interaction
+    const handleFirstInteraction = () => {
+      if (!hasUnmuted.current && audio && isMuted) {
+        audio.muted = false;
+        setIsMuted(false);
+        hasUnmuted.current = true;
+        
+        // Ensure it's playing
+        if (audio.paused) {
+          audio.currentTime = 15;
+          audio.play().catch(() => {});
+        }
+      }
+    };
+
+    // Start music when audio is ready
+    audio.addEventListener('canplay', startMusic, { once: true });
+    
+    // Listen for first interaction to unmute
+    document.addEventListener('click', handleFirstInteraction, { once: true });
+    document.addEventListener('touchstart', handleFirstInteraction, { once: true });
+    document.addEventListener('keydown', handleFirstInteraction, { once: true });
+
+    // Handle play/pause state
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+    const handleEnded = () => {
       audio.currentTime = 15;
       audio.play();
-    });
+    };
 
-    // Load the audio
-    audio.load();
+    audio.addEventListener('play', handlePlay);
+    audio.addEventListener('pause', handlePause);
+    audio.addEventListener('ended', handleEnded);
 
     return () => {
-      audio.removeEventListener('loadeddata', handleLoadedData);
-      audio.removeEventListener('play', () => setIsPlaying(true));
-      audio.removeEventListener('pause', () => setIsPlaying(false));
+      audio.removeEventListener('play', handlePlay);
+      audio.removeEventListener('pause', handlePause);
+      audio.removeEventListener('ended', handleEnded);
     };
   }, []);
 
@@ -60,8 +89,13 @@ export default function AudioPlayer() {
     if (isPlaying) {
       audio.pause();
     } else {
-      audio.play().catch((error) => {
-        console.error('Error playing audio:', error);
+      if (audio.currentTime < 15) {
+        audio.currentTime = 15;
+      }
+      audio.muted = false;
+      audio.play().then(() => {
+        setIsMuted(false);
+        hasUnmuted.current = true;
       });
     }
   };
@@ -72,25 +106,51 @@ export default function AudioPlayer() {
 
     audio.muted = !audio.muted;
     setIsMuted(!isMuted);
+    hasUnmuted.current = !audio.muted;
   };
 
   return (
     <>
-      {/* Hidden audio element */}
+      {/* Audio element */}
       <audio
         ref={audioRef}
-        src="/blastoyz-mandala-128-ytshorts.savetube.me.mp3"
         preload="auto"
-      />
+      >
+        <source src="/blastoyz-mandala-128-ytshorts.savetube.me.mp3" type="audio/mpeg" />
+      </audio>
+
+      {/* Simple notification banner - shows briefly if muted */}
+      <AnimatePresence>
+        {isMuted && isPlaying && !hasUnmuted.current && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ delay: 1 }}
+            className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50"
+          >
+            <motion.div
+              animate={{ 
+                scale: [1, 1.02, 1],
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="bg-primary/90 backdrop-blur-sm text-white px-6 py-3 rounded-full shadow-xl border border-white/20 flex items-center gap-2 text-sm font-medium"
+            >
+              <span className="text-lg">🎵</span>
+              Click anywhere to hear the music
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Floating audio controls */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8, y: 100 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ delay: 1, duration: 0.5 }}
+        transition={{ delay: 0.3, duration: 0.4 }}
         className="fixed bottom-6 right-6 z-50 flex flex-col gap-2"
       >
-        {/* Play/Pause Button */}
+        {/* Play/Pause Button - Shows Pause by default since music is playing */}
         <motion.button
           onClick={togglePlayPause}
           className="relative w-16 h-16 bg-primary rounded-full shadow-2xl hover:bg-primary/90 transition-all flex items-center justify-center group overflow-hidden"
@@ -101,23 +161,32 @@ export default function AudioPlayer() {
           {/* Animated background pulse when playing */}
           <AnimatePresence>
             {isPlaying && (
-              <motion.div
-                initial={{ scale: 1, opacity: 0.5 }}
-                animate={{ scale: 1.5, opacity: 0 }}
-                exit={{ scale: 1, opacity: 0 }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="absolute inset-0 bg-primary rounded-full"
-              />
+              <>
+                <motion.div
+                  initial={{ scale: 1, opacity: 0.5 }}
+                  animate={{ scale: 1.5, opacity: 0 }}
+                  exit={{ scale: 1, opacity: 0 }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                  className="absolute inset-0 bg-primary rounded-full"
+                />
+                <motion.div
+                  initial={{ scale: 1, opacity: 0.3 }}
+                  animate={{ scale: 2, opacity: 0 }}
+                  exit={{ scale: 1, opacity: 0 }}
+                  transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                  className="absolute inset-0 bg-primary rounded-full"
+                />
+              </>
             )}
           </AnimatePresence>
 
-          {/* Icon */}
+          {/* Icon - Shows PAUSE by default since music auto-plays */}
           <div className="relative z-10 text-white text-2xl">
             {isPlaying ? <FaPause /> : <FaPlay className="ml-1" />}
           </div>
 
           {/* Tooltip */}
-          <div className="absolute -top-12 right-0 bg-dark-800 text-white text-xs px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+          <div className="absolute -top-12 right-0 bg-dark-800 text-white text-xs px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg">
             {isPlaying ? 'Pause Music' : 'Play Music'}
           </div>
         </motion.button>
@@ -129,20 +198,29 @@ export default function AudioPlayer() {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           aria-label={isMuted ? 'Unmute music' : 'Mute music'}
+          animate={isMuted && isPlaying && !hasUnmuted.current ? {
+            scale: [1, 1.05, 1],
+            boxShadow: [
+              '0 4px 15px rgba(230, 57, 70, 0.3)',
+              '0 4px 25px rgba(230, 57, 70, 0.6)',
+              '0 4px 15px rgba(230, 57, 70, 0.3)',
+            ]
+          } : {}}
+          transition={{ duration: 2, repeat: Infinity }}
         >
           <div className="relative z-10 text-white text-lg">
             {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
           </div>
 
           {/* Tooltip */}
-          <div className="absolute -top-12 right-0 bg-dark-800 text-white text-xs px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+          <div className="absolute -top-12 right-0 bg-dark-800 text-white text-xs px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg">
             {isMuted ? 'Unmute' : 'Mute'}
           </div>
         </motion.button>
 
         {/* Now Playing Label */}
         <AnimatePresence>
-          {isPlaying && (
+          {isPlaying && !isMuted && (
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}

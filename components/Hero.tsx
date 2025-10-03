@@ -9,7 +9,7 @@ export default function Hero() {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.playbackRate = 0.8; // Slow down video for dramatic effect
+      videoRef.current.playbackRate = 0.8;
     }
   }, []);
 
@@ -32,13 +32,13 @@ export default function Hero() {
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
           onLoadedData={handleVideoLoad}
           onCanPlay={handleVideoLoad}
           className="w-full h-full object-cover"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.5 }}
         >
           <source src="/images/Glitch Logo.mp4" type="video/mp4" />
         </motion.video>
@@ -50,7 +50,7 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 1 }}
           animate={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
           className="absolute inset-0 bg-dark-900 z-20 flex items-center justify-center"
         >
           <div className="flex flex-col items-center gap-4">
@@ -69,7 +69,7 @@ export default function Hero() {
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={videoLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 1, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
           className="text-6xl md:text-8xl font-bold mb-6 tracking-tight"
         >
           DJ <span className="text-primary">Rishi</span>
@@ -78,7 +78,7 @@ export default function Hero() {
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={videoLoaded ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 1, delay: 0.6 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           className="text-xl md:text-2xl text-gray-300 mb-12 max-w-2xl mx-auto"
         >
           Elevate Your Experience
@@ -87,7 +87,7 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={videoLoaded ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-          transition={{ duration: 0.8, delay: 0.9 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
           <motion.a
@@ -114,7 +114,7 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={videoLoaded ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ delay: 1.2, duration: 1 }}
+        transition={{ delay: 0.7, duration: 0.5 }}
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2 cursor-pointer"
         onClick={scrollToNext}
       >

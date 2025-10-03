@@ -1,13 +1,33 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
-import ParallaxReveal from '@/components/ParallaxReveal';
-import ScrollRevealSection from '@/components/ScrollRevealSection';
-import Tours from '@/components/Tours';
-import Music from '@/components/Music';
-import Shop from '@/components/Shop';
-import Footer from '@/components/Footer';
+
+// Lazy load components that are below the fold
+const ParallaxReveal = dynamic(() => import('@/components/ParallaxReveal'), {
+  loading: () => <div className="h-96" />,
+});
+
+const ScrollRevealSection = dynamic(() => import('@/components/ScrollRevealSection'), {
+  loading: () => <div className="h-96" />,
+});
+
+const Tours = dynamic(() => import('@/components/Tours'), {
+  loading: () => <div className="h-96" />,
+});
+
+const Music = dynamic(() => import('@/components/Music'), {
+  loading: () => <div className="h-96" />,
+});
+
+const Shop = dynamic(() => import('@/components/Shop'), {
+  loading: () => <div className="h-96" />,
+});
+
+const Footer = dynamic(() => import('@/components/Footer'), {
+  loading: () => <div className="h-96" />,
+});
 
 export default function Home() {
   return (

@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
+import Image from 'next/image';
 
 interface ScrollRevealSectionProps {
   imageSrc: string;
@@ -42,12 +43,16 @@ export default function ScrollRevealSection({
           {/* Image */}
           <motion.div
             style={{ opacity, scale, x }}
-            className="flex-1"
+            className="flex-1 relative w-full aspect-square"
           >
-            <img
+            <Image
               src={imageSrc}
               alt={imageAlt}
-              className="w-full h-auto rounded-2xl shadow-2xl"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover rounded-2xl shadow-2xl"
+              loading="lazy"
+              quality={85}
             />
           </motion.div>
 
@@ -55,8 +60,8 @@ export default function ScrollRevealSection({
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
             className="flex-1"
           >
             <h2 className="text-5xl md:text-6xl font-bold mb-6">{title}</h2>
