@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useUploadThing } from '@/lib/uploadthing';
 import { FaUpload, FaTrash, FaLock, FaImages } from 'react-icons/fa';
 import { HiX } from 'react-icons/hi';
+import VideoPlayer from '@/components/VideoPlayer';
 
 interface GalleryImage {
   id: string;
@@ -253,18 +254,13 @@ export default function AdminPage() {
                   className="relative group"
                 >
                   {image.type === 'video' ? (
-                    <div className="relative w-full aspect-square bg-dark-700 rounded-lg overflow-hidden">
-                      <video
-                        className="w-full h-full object-cover"
-                        controls
-                        muted
-                        playsInline
-                        preload="metadata"
-                        crossOrigin="anonymous"
-                      >
-                        <source src={image.src} type="video/mp4" />
-                        Your browser does not support the video tag.
-                      </video>
+                    <div className="w-full aspect-square rounded-lg overflow-hidden">
+                      <VideoPlayer
+                        src={image.src}
+                        title={image.title}
+                        thumbnail={true}
+                        controls={false}
+                      />
                     </div>
                   ) : (
                     <img
