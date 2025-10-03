@@ -42,7 +42,7 @@ export default function AudioPlayer() {
 
     // Auto-unmute on first user interaction
     const handleFirstInteraction = () => {
-      if (!hasUnmuted.current && audio && isMuted) {
+      if (!hasUnmuted.current && audio) {
         audio.muted = false;
         setIsMuted(false);
         hasUnmuted.current = true;
@@ -59,9 +59,13 @@ export default function AudioPlayer() {
     audio.addEventListener('canplay', startMusic, { once: true });
     
     // Listen for first interaction to unmute
-    document.addEventListener('click', handleFirstInteraction, { once: true });
-    document.addEventListener('touchstart', handleFirstInteraction, { once: true });
-    document.addEventListener('keydown', handleFirstInteraction, { once: true });
+    const clickHandler = handleFirstInteraction;
+    const touchHandler = handleFirstInteraction;
+    const keyHandler = handleFirstInteraction;
+    
+    document.addEventListener('click', clickHandler, { once: true });
+    document.addEventListener('touchstart', touchHandler, { once: true });
+    document.addEventListener('keydown', keyHandler, { once: true });
 
     // Handle play/pause state
     const handlePlay = () => setIsPlaying(true);
@@ -79,8 +83,11 @@ export default function AudioPlayer() {
       audio.removeEventListener('play', handlePlay);
       audio.removeEventListener('pause', handlePause);
       audio.removeEventListener('ended', handleEnded);
+      document.removeEventListener('click', clickHandler);
+      document.removeEventListener('touchstart', touchHandler);
+      document.removeEventListener('keydown', keyHandler);
     };
-  }, []);
+  }, []); // Fixed: removed isMuted from dependencies
 
   const togglePlayPause = () => {
     const audio = audioRef.current;

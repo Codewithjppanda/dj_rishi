@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Poppins } from 'next/font/google';
 import './globals.css';
 import SmoothScrolling from '@/components/SmoothScrolling';
@@ -17,7 +17,11 @@ export const metadata: Metadata = {
   description: 'Experience the rhythm and explore the soundscapes crafted by DJ Rishi',
   keywords: ['DJ Rishi', 'DJ', 'Music', 'Electronic Music', 'EDM', 'Performances'],
   authors: [{ name: 'DJ Rishi' }],
-  viewport: 'width=device-width, initial-scale=1',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
   themeColor: '#E63946',
 };
 
