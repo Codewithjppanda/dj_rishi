@@ -7,14 +7,20 @@ export async function GET() {
   try {
     const files = await utapi.listFiles();
     
-    const images = files.files.map((file: any) => ({
-      id: file.key,
-      src: `https://utfs.io/f/${file.key}`,
-      title: file.customId || file.name || 'Untitled',
-      category: 'Festivals', // Default category since we can't store custom metadata in free tier
-      uploadedAt: file.uploadedAt,
-      type: file.mimeType?.startsWith('video/') ? 'video' : 'image',
-    }));
+    const images = files.files.map((file: any) => {
+      // Check file extension to determine type
+      const fileName = file.name || file.customId || '';
+      const isVideo = fileName.toLowerCase().match(/\.(mp4|mov|avi|wmv|flv|webm|mkv)$/);
+      
+      return {
+        id: file.key,
+        src: `https://utfs.io/f/${file.key}`,
+        title: file.customId || file.name || 'Untitled',
+        category: 'Festivals', // Default category since we can't store custom metadata in free tier
+        uploadedAt: file.uploadedAt,
+        type: isVideo ? 'video' : 'image',
+      };
+    });
     
     return NextResponse.json(images);
   } catch (error) {
