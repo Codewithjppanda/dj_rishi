@@ -253,15 +253,18 @@ export default function AdminPage() {
                   className="relative group"
                 >
                   {image.type === 'video' ? (
-                    <div className="relative w-full aspect-square">
+                    <div className="relative w-full aspect-square bg-dark-700 rounded-lg overflow-hidden">
                       <video
-                        src={image.src}
-                        className="w-full h-full object-cover rounded-lg"
+                        className="w-full h-full object-cover"
                         controls
                         muted
                         playsInline
                         preload="metadata"
-                      />
+                        crossOrigin="anonymous"
+                      >
+                        <source src={image.src} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
                     </div>
                   ) : (
                     <img
