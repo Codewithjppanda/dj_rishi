@@ -34,6 +34,7 @@ export default function Header() {
     { name: 'Music', href: '/music' },
     { name: 'Gallery', href: '/gallery' },
     { name: 'Contact', href: '/contact' },
+    { name: 'Stream', href: '/stream' },
   ];
 
   const socialLinks = [

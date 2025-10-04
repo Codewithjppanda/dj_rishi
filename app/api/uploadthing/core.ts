@@ -30,6 +30,34 @@ export const ourFileRouter = {
         type: metadata.type,
       };
     }),
+
+  // New: Audio uploader for high-quality music files
+  audioUploader: f({ 
+    audio: { 
+      maxFileSize: "128MB", // Support high-quality audio files
+      maxFileCount: 10 
+    } 
+  })
+    .middleware(async ({ req }) => {
+      return { 
+        title: "Uploaded Audio", 
+        artist: "DJ Rishi",
+        album: "Single",
+        genre: "Electronic",
+        type: "audio" 
+      };
+    })
+    .onUploadComplete(async ({ file, metadata }) => {
+      console.log("Audio upload complete:", file.url, metadata);
+      return { 
+        url: file.url,
+        title: metadata.title,
+        artist: metadata.artist,
+        album: metadata.album,
+        genre: metadata.genre,
+        type: metadata.type,
+      };
+    }),
 } satisfies FileRouter;
  
 export type OurFileRouter = typeof ourFileRouter;
