@@ -216,48 +216,50 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-dark-900 p-6">
+    <div className="min-h-screen bg-dark-900 p-4 sm:p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
           <motion.h1
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-4xl font-bold"
+            className="text-3xl sm:text-4xl font-bold"
           >
             <span className="text-primary">Admin Panel</span>
           </motion.h1>
           <button
             onClick={handleLogout}
-            className="px-6 py-2 bg-dark-800 hover:bg-dark-700 rounded-lg transition-all"
+            className="w-full sm:w-auto px-6 py-2 bg-dark-800 hover:bg-dark-700 rounded-lg transition-all text-center"
           >
             Logout
           </button>
         </div>
 
-        {/* Tab Navigation */}
-        <div className="flex space-x-4 mb-8">
+        {/* Tab Navigation - Mobile Optimized */}
+        <div className="flex flex-col sm:flex-row gap-3 mb-6 sm:mb-8">
           <button
             onClick={() => setActiveTab('gallery')}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+            className={`flex items-center justify-center sm:justify-start px-6 py-4 sm:py-3 rounded-lg font-semibold transition-all touch-manipulation ${
               activeTab === 'gallery'
-                ? 'bg-primary text-white'
-                : 'bg-dark-800 text-gray-300 hover:bg-dark-700'
+                ? 'bg-primary text-white shadow-lg shadow-primary/25'
+                : 'bg-dark-800 text-gray-300 hover:bg-dark-700 active:bg-dark-700'
             }`}
+            style={{ minHeight: '48px' }} // Ensure minimum touch target size
           >
-            <FaImages className="inline mr-2" />
-            Gallery Management
+            <FaImages className="mr-2 text-xl sm:text-base" />
+            <span className="text-base font-semibold">Gallery Management</span>
           </button>
           <button
             onClick={() => setActiveTab('music')}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+            className={`flex items-center justify-center sm:justify-start px-6 py-4 sm:py-3 rounded-lg font-semibold transition-all touch-manipulation ${
               activeTab === 'music'
-                ? 'bg-primary text-white'
-                : 'bg-dark-800 text-gray-300 hover:bg-dark-700'
+                ? 'bg-primary text-white shadow-lg shadow-primary/25'
+                : 'bg-dark-800 text-gray-300 hover:bg-dark-700 active:bg-dark-700'
             }`}
+            style={{ minHeight: '48px' }} // Ensure minimum touch target size
           >
-            <FaMusic className="inline mr-2" />
-            Music Management
+            <FaMusic className="mr-2 text-xl sm:text-base" />
+            <span className="text-base font-semibold">Music Management</span>
           </button>
         </div>
 
@@ -267,14 +269,14 @@ export default function AdminPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-dark-800 p-6 rounded-xl mb-8 border border-dark-700"
+              className="bg-dark-800 p-4 sm:p-6 rounded-xl mb-6 sm:mb-8 border border-dark-700"
             >
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+              <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2">
                 <FaUpload className="text-primary" />
                 Upload Media
               </h2>
               
-              <div className="grid md:grid-cols-3 gap-4 mb-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
                 <input
                   type="text"
                   value={title}
@@ -306,7 +308,7 @@ export default function AdminPage() {
               <div className="mb-4">
                 <label className="block w-full px-4 py-8 bg-dark-700 border-2 border-dashed border-dark-600 rounded-lg cursor-pointer hover:border-primary transition-all text-center">
                   <FaImages className="text-4xl text-gray-400 mx-auto mb-2" />
-                  <span className="text-gray-400">
+                  <span className="text-gray-400 text-sm sm:text-base">
                     {selectedFiles.length > 0
                       ? `${selectedFiles.length} file(s) selected`
                       : `Click to select ${fileType}`}
@@ -324,7 +326,8 @@ export default function AdminPage() {
               <button
                 onClick={handleUpload}
                 disabled={uploading || !selectedFiles.length}
-                className="w-full px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
+                style={{ minHeight: '48px' }}
               >
                 {uploading ? 'Uploading...' : `Upload ${fileType === 'images' ? 'Images' : 'Videos'}`}
               </button>
@@ -335,9 +338,9 @@ export default function AdminPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="bg-dark-800 p-6 rounded-xl border border-dark-700"
+              className="bg-dark-800 p-4 sm:p-6 rounded-xl border border-dark-700"
             >
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+              <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2">
                 <FaImages className="text-primary" />
                 Uploaded Media ({images.length})
               </h2>
@@ -345,7 +348,7 @@ export default function AdminPage() {
               {images.length === 0 ? (
                 <p className="text-gray-400 text-center py-8">No media uploaded yet</p>
               ) : (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                   {images.map((image, index) => (
                     <motion.div
                       key={image.id}
@@ -371,11 +374,11 @@ export default function AdminPage() {
                         />
                       )}
                       <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-all rounded-lg flex flex-col items-center justify-center p-4">
-                        <p className="text-white font-semibold text-sm mb-1">{image.title}</p>
+                        <p className="text-white font-semibold text-sm mb-1 text-center">{image.title}</p>
                         <p className="text-primary text-xs mb-3">{image.category}</p>
                         <button
                           onClick={() => handleDeleteImage(image.id)}
-                          className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm flex items-center gap-2 transition-all"
+                          className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm flex items-center gap-2 transition-all touch-manipulation"
                         >
                           <FaTrash /> Delete
                         </button>
@@ -394,14 +397,14 @@ export default function AdminPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-dark-800 p-6 rounded-xl mb-8 border border-dark-700"
+              className="bg-dark-800 p-4 sm:p-6 rounded-xl mb-6 sm:mb-8 border border-dark-700"
             >
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+              <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2">
                 <FaMusic className="text-primary" />
                 Upload High-Quality Music
               </h2>
               
-              <div className="grid md:grid-cols-2 gap-4 mb-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <input
                   type="text"
                   value={musicTitle}
@@ -442,7 +445,7 @@ export default function AdminPage() {
               <div className="mb-4">
                 <label className="block w-full px-4 py-8 bg-dark-700 border-2 border-dashed border-dark-600 rounded-lg cursor-pointer hover:border-primary transition-all text-center">
                   <FaMusic className="text-4xl text-gray-400 mx-auto mb-2" />
-                  <span className="text-gray-400">
+                  <span className="text-gray-400 text-sm sm:text-base">
                     {selectedFiles.length > 0
                       ? `${selectedFiles.length} audio file(s) selected`
                       : 'Click to select high-quality audio files'}
@@ -466,7 +469,8 @@ export default function AdminPage() {
                   handleUpload();
                 }}
                 disabled={uploading || !selectedFiles.length}
-                className="w-full px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-6 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
+                style={{ minHeight: '48px' }}
               >
                 {uploading ? 'Uploading High-Quality Audio...' : 'Upload Music Tracks'}
               </button>
@@ -477,9 +481,9 @@ export default function AdminPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="bg-dark-800 p-6 rounded-xl border border-dark-700"
+              className="bg-dark-800 p-4 sm:p-6 rounded-xl border border-dark-700"
             >
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+              <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-2">
                 <FaMusic className="text-primary" />
                 Music Library ({musicTracks.length} tracks)
               </h2>
@@ -487,22 +491,22 @@ export default function AdminPage() {
               {musicTracks.length === 0 ? (
                 <p className="text-gray-400 text-center py-8">No music tracks uploaded yet</p>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {musicTracks.map((track, index) => (
                     <motion.div
                       key={track.id}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="flex items-center justify-between p-4 bg-dark-700 rounded-lg hover:bg-dark-600 transition-colors group"
+                      className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-dark-700 rounded-lg hover:bg-dark-600 transition-colors group gap-3 sm:gap-0"
                     >
-                      <div className="flex items-center space-x-4">
-                        <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center">
+                      <div className="flex items-start sm:items-center space-x-3 sm:space-x-4 w-full sm:w-auto">
+                        <div className="w-12 h-12 flex-shrink-0 bg-primary/20 rounded-lg flex items-center justify-center">
                           <FaMusic className="text-primary" />
                         </div>
-                        <div>
-                          <h3 className="text-white font-semibold">{track.title}</h3>
-                          <p className="text-gray-400 text-sm">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-white font-semibold truncate">{track.title}</h3>
+                          <p className="text-gray-400 text-sm truncate">
                             {track.artist} • {track.album} • {track.genre}
                           </p>
                           <p className="text-gray-500 text-xs">
@@ -511,16 +515,18 @@ export default function AdminPage() {
                         </div>
                       </div>
                       
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-2 w-full sm:w-auto justify-end">
                         <button
                           onClick={() => window.open(track.src, '_blank')}
-                          className="p-2 bg-primary/20 text-primary rounded-lg hover:bg-primary/30 transition-colors opacity-0 group-hover:opacity-100"
+                          className="flex-1 sm:flex-none p-3 sm:p-2 bg-primary/20 text-primary rounded-lg hover:bg-primary/30 transition-colors touch-manipulation"
+                          style={{ minHeight: '44px' }}
                         >
                           <FaPlay />
                         </button>
                         <button
                           onClick={() => handleDeleteMusic(track.id)}
-                          className="p-2 bg-red-600/20 text-red-400 rounded-lg hover:bg-red-600/30 transition-colors opacity-0 group-hover:opacity-100"
+                          className="flex-1 sm:flex-none p-3 sm:p-2 bg-red-600/20 text-red-400 rounded-lg hover:bg-red-600/30 transition-colors touch-manipulation"
+                          style={{ minHeight: '44px' }}
                         >
                           <FaTrash />
                         </button>

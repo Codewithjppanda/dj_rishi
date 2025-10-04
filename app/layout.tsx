@@ -34,7 +34,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={poppins.className}>
         <SmoothScrolling>{children}</SmoothScrolling>
-        <AudioPlayer />
+       {/* <AudioPlayer /> */}
       </body>
     </html>
   );
