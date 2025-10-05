@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="grad144" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E63946;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d62839;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="144" height="144" rx="21.599999999999998" fill="url(#grad144)"/>
+  
+  <!-- Music Notes -->
+  <g fill="white" opacity="0.95">
+    <!-- Note 1 -->
+    <ellipse cx="63.36000000000001" cy="103.67999999999999" rx="10.367999999999999" ry="7.775999999999999" />
+    <rect x="71.136" y="56.160000000000004" width="5.183999999999999" height="50.111999999999995" rx="2.5919999999999996"/>
+    
+    <!-- Note 2 -->
+    <ellipse cx="89.28" cy="108" rx="10.367999999999999" ry="7.775999999999999" />
+    <rect x="97.05600000000001" y="43.2" width="5.183999999999999" height="64.8" rx="2.5919999999999996"/>
+    
+    <!-- Beam connecting notes -->
+    <path d="M 76.32000000000001 56.160000000000004 L 102.24000000000001 43.2 L 102.24000000000001 51.84 L 76.32000000000001 64.8 Z" />
+  </g>
+  
+  <!-- DJ Rishi Text for larger icons -->
+  
+</svg>

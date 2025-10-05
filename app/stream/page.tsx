@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SpotifyPlayer from '@/components/SpotifyPlayer';
+import PWAInstallPrompt from '@/components/PWAInstallPrompt';
+import PWARegister from '@/components/PWARegister';
 import { FaPlay, FaPause, FaMusic, FaClock, FaCalendarAlt } from 'react-icons/fa';
 
 interface Track {
@@ -70,6 +72,7 @@ export default function StreamPage() {
 
   return (
     <main className="min-h-screen bg-dark-900 pb-32">
+      <PWARegister />
       <Header />
 
       {/* Hero Section */}
@@ -283,6 +286,9 @@ export default function StreamPage() {
           />
         )}
       </AnimatePresence>
+
+      {/* PWA Install Prompt */}
+      <PWAInstallPrompt />
 
       <Footer />
     </main>

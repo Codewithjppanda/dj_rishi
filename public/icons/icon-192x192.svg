@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="grad192" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E63946;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d62839;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="192" height="192" rx="28.799999999999997" fill="url(#grad192)"/>
+  
+  <!-- Music Notes -->
+  <g fill="white" opacity="0.95">
+    <!-- Note 1 -->
+    <ellipse cx="84.48" cy="138.23999999999998" rx="13.823999999999998" ry="10.367999999999999" />
+    <rect x="94.848" y="74.88" width="6.911999999999999" height="66.81599999999999" rx="3.4559999999999995"/>
+    
+    <!-- Note 2 -->
+    <ellipse cx="119.03999999999999" cy="144" rx="13.823999999999998" ry="10.367999999999999" />
+    <rect x="129.40800000000002" y="57.6" width="6.911999999999999" height="86.39999999999999" rx="3.4559999999999995"/>
+    
+    <!-- Beam connecting notes -->
+    <path d="M 101.75999999999999 74.88 L 136.32 57.6 L 136.32 69.12 L 101.75999999999999 86.4 Z" />
+  </g>
+  
+  <!-- DJ Rishi Text for larger icons -->
+  <text x="96" y="163.2" font-family="Arial, sans-serif" font-size="15.36" font-weight="bold" fill="white" text-anchor="middle" opacity="0.9">DJ RISHI</text>
+</svg>

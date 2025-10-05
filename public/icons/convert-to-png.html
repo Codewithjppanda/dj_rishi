@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG to PNG Converter - DJ Rishi Icons</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a0a23 0%, #1a1a3e 100%);
+      color: white;
+      padding: 30px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #E63946;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #b0b0b0;
+      margin-bottom: 30px;
+    }
+    .icons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    .icon-card {
+      background: #1a1a3e;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .icon-card:hover {
+      transform: translateY(-5px);
+    }
+    .icon-preview {
+      width: 100%;
+      max-width: 150px;
+      height: auto;
+      margin: 0 auto 15px;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    canvas {
+      display: block;
+      margin: 0 auto;
+      border-radius: 10px;
+    }
+    .icon-size {
+      font-size: 18px;
+      font-weight: bold;
+      color: #E63946;
+      margin-bottom: 10px;
+    }
+    button {
+      background: #E63946;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s;
+      width: 100%;
+    }
+    button:hover {
+      background: #d62839;
+      transform: scale(1.05);
+    }
+    button:disabled {
+      background: #666;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .instructions {
+      background: #2a2a5e;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      border-left: 4px solid #E63946;
+    }
+    .instructions h3 {
+      margin-bottom: 10px;
+    }
+    .instructions ol {
+      margin-left: 20px;
+      line-height: 1.8;
+    }
+    .download-all {
+      text-align: center;
+      margin: 30px 0;
+    }
+    .download-all button {
+      max-width: 300px;
+      display: inline-block;
+      width: auto;
+      padding: 15px 40px;
+      font-size: 16px;
+    }
+    .status {
+      text-align: center;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 8px;
+      background: rgba(230, 57, 70, 0.2);
+      border: 1px solid #E63946;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎵 DJ Rishi - Icon Converter</h1>
+    <p class="subtitle">Convert SVG icons to PNG format for your PWA</p>
+
+    <div class="instructions">
+      <h3>📋 Instructions:</h3>
+      <ol>
+        <li>The icons are being generated automatically below</li>
+        <li>Click "Download PNG" on each icon to save it</li>
+        <li>Or click "Download All as ZIP" for convenience</li>
+        <li>Save all PNGs in your <code>/public/icons/</code> folder</li>
+        <li>Delete the .svg files if you want (PNGs are preferred for PWA)</li>
+      </ol>
+    </div>
+
+    <div class="download-all">
+      <button onclick="downloadAllAsZip()" id="downloadAllBtn">
+        📦 Download All as ZIP
+      </button>
+    </div>
+
+    <div id="status" class="status" style="display: none;"></div>
+
+    <div class="icons-grid" id="iconsGrid"></div>
+  </div>
+
+  <script>
+    const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+    const iconsData = {};
+
+    function createMusicIconSVG(size) {
+      const padding = size * 0.15;
+      const noteSize = size * 0.6;
+      const noteX = size / 2 - noteSize / 4;
+      const noteY = size / 2 - noteSize / 3;
+
+      return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}">
+        <defs>
+          <linearGradient id="grad${size}" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#E63946;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#d62839;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <rect width="${size}" height="${size}" rx="${size * 0.15}" fill="url(#grad${size})"/>
+        <g fill="white" opacity="0.95">
+          <ellipse cx="${noteX + noteSize * 0.15}" cy="${noteY + noteSize * 0.7}" rx="${noteSize * 0.12}" ry="${noteSize * 0.09}" />
+          <rect x="${noteX + noteSize * 0.24}" y="${noteY + noteSize * 0.15}" width="${noteSize * 0.06}" height="${noteSize * 0.58}" rx="${noteSize * 0.03}"/>
+          <ellipse cx="${noteX + noteSize * 0.45}" cy="${noteY + noteSize * 0.75}" rx="${noteSize * 0.12}" ry="${noteSize * 0.09}" />
+          <rect x="${noteX + noteSize * 0.54}" y="${noteY}" width="${noteSize * 0.06}" height="${noteSize * 0.75}" rx="${noteSize * 0.03}"/>
+          <path d="M ${noteX + noteSize * 0.3} ${noteY + noteSize * 0.15} L ${noteX + noteSize * 0.6} ${noteY} L ${noteX + noteSize * 0.6} ${noteY + noteSize * 0.1} L ${noteX + noteSize * 0.3} ${noteY + noteSize * 0.25} Z" />
+        </g>
+        ${size >= 192 ? `<text x="${size / 2}" y="${size - padding}" font-family="Arial, sans-serif" font-size="${size * 0.08}" font-weight="bold" fill="white" text-anchor="middle" opacity="0.9">DJ RISHI</text>` : ''}
+      </svg>`;
+    }
+
+    function svgToPng(svgString, size, callback) {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+
+      const img = new Image();
+      const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0);
+        URL.revokeObjectURL(url);
+        canvas.toBlob(callback, 'image/png');
+      };
+
+      img.src = url;
+      return canvas;
+    }
+
+    function downloadPNG(size) {
+      const svgString = createMusicIconSVG(size);
+      svgToPng(svgString, size, (blob) => {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.download = `icon-${size}x${size}.png`;
+        link.href = url;
+        link.click();
+        URL.revokeObjectURL(url);
+      });
+    }
+
+    function generateIconCard(size) {
+      const card = document.createElement('div');
+      card.className = 'icon-card';
+
+      const sizeLabel = document.createElement('div');
+      sizeLabel.className = 'icon-size';
+      sizeLabel.textContent = `${size}×${size}px`;
+
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      canvas.style.width = '150px';
+      canvas.style.height = '150px';
+
+      const button = document.createElement('button');
+      button.textContent = '📥 Download PNG';
+      button.onclick = () => downloadPNG(size);
+
+      // Generate preview
+      const svgString = createMusicIconSVG(size);
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0);
+        URL.revokeObjectURL(url);
+        
+        // Store for zip download
+        canvas.toBlob((blob) => {
+          iconsData[size] = blob;
+        }, 'image/png');
+      };
+      img.src = url;
+
+      card.appendChild(sizeLabel);
+      card.appendChild(canvas);
+      card.appendChild(button);
+
+      return card;
+    }
+
+    async function downloadAllAsZip() {
+      const btn = document.getElementById('downloadAllBtn');
+      const status = document.getElementById('status');
+      
+      btn.disabled = true;
+      btn.textContent = '⏳ Generating ZIP...';
+      status.style.display = 'block';
+      status.textContent = 'Generating all icons and creating ZIP file...';
+
+      // Wait for all icons to be generated
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // Simple zip creation (without library)
+      // For better implementation, use JSZip library
+      alert('Downloading icons individually. For ZIP download, please install JSZip library or download each icon separately.');
+      
+      // Download all icons
+      for (const size of sizes) {
+        await new Promise(resolve => setTimeout(resolve, 300));
+        downloadPNG(size);
+      }
+
+      btn.disabled = false;
+      btn.textContent = '✅ Download All as ZIP';
+      status.textContent = 'All icons downloaded! Check your downloads folder.';
+      
+      setTimeout(() => {
+        status.style.display = 'none';
+      }, 3000);
+    }
+
+    // Generate all icon cards
+    const grid = document.getElementById('iconsGrid');
+    sizes.forEach(size => {
+      grid.appendChild(generateIconCard(size));
+    });
+  </script>
+</body>
+</html>
+

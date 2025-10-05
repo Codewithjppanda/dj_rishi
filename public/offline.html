@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - DJ Rishi</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a0a23 0%, #1a1a3e 100%);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      text-align: center;
+      max-width: 500px;
+    }
+    .icon {
+      font-size: 80px;
+      margin-bottom: 30px;
+      animation: pulse 2s infinite;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    .highlight {
+      color: #E63946;
+    }
+    p {
+      color: #b0b0b0;
+      font-size: 1.1rem;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+    .button {
+      background-color: #E63946;
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+    }
+    .button:hover {
+      background-color: #d62839;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+    }
+    .music-note {
+      font-size: 40px;
+      margin-top: 30px;
+      opacity: 0.5;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">📡</div>
+    <h1>You're <span class="highlight">Offline</span></h1>
+    <p>
+      Oops! It looks like you've lost your internet connection. 
+      Please check your network and try again.
+    </p>
+    <button class="button" onclick="window.location.reload()">
+      🔄 Retry Connection
+    </button>
+    <div class="music-note">🎵</div>
+  </div>
+</body>
+</html>
+

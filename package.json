@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check-icons": "node scripts/generate-icons.js",
+    "pwa-build": "npm run check-icons && npm run build"
   },
   "dependencies": {
     "@formspree/react": "^3.0.0",
